@@ -1,12 +1,21 @@
+// Linking button elements to javascript variables
+
 var playbackButton = document.getElementsByTagName('button')[0];
 var playButton = document.getElementsByTagName('button')[1];
 var pauseButton = document.getElementsByTagName('button')[2];
 var nextButton = document.getElementsByTagName('button')[3];
 
-// var jukebox = new Audio('music/unity.mp3')
+var title = document.querySelector('#currentSong');
+var titleTwo = document.querySelector('#artistAndAlbum');
+
+// -----------------------------------------------------------------------------
+
+// Event Listeners
 
 playButton.addEventListener('click', function() {
   jordansJukeBox.playAudio()
+  title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
+  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' - ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
 });
 
 pauseButton.addEventListener('click', function() {
@@ -15,17 +24,20 @@ pauseButton.addEventListener('click', function() {
 
 nextButton.addEventListener('click', function() {
   jordansJukeBox.nextAudio()
+  title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
+  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' - ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
 });
 
 playbackButton.addEventListener('click', function() {
   jordansJukeBox.playbackAudio()
+  title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
+  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' - ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
 });
 
+// -----------------------------------------------------------------------------
 
+// Song Function
 
-// DUMMY
-
-// constructor function which has play, pause, next, previous, stop, and shuffle funtionality.
 class Song {
   constructor(songName, artist, album, genre, src) {
     this.songName = songName;
@@ -37,15 +49,19 @@ class Song {
   }
 };
 
+// -----------------------------------------------------------------------------
+
 // Creating Instances of Song Constructor
 
 var song1 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/01_One_More_Time.mp3');
 
-var song2 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/02_Aerodynamic.mp3')
+var song2 = new Song('Aerodynamic', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/02_Aerodynamic.mp3')
 
-var song3 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/04_Harder,_Better,_Faster,_Stronger.mp3')
+var song3 = new Song('Harder, Better, Faster, Stronger', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/04_Harder,_Better,_Faster,_Stronger.mp3')
 
 // -----------------------------------------------------------------------------
+
+// Jukebox Class
 
 class Jukebox {
   constructor() {
@@ -54,10 +70,12 @@ class Jukebox {
   }
   addSongs(song) {
     this.songs.push(song);
-    console.log('Song Added!');
+    console.log(song.songName + ' by ' + song.artist + ', added to library');
   }
   playAudio() {
     this.songs[this.songNum].myAudio.play()
+    console.log('Now Playing...')
+    console.log(this.songs[this.songNum].songName + ' by ' + this.songs[this.songNum].artist)
       }
   pauseAudio() {
     this.songs[this.songNum].myAudio.pause()
@@ -95,6 +113,8 @@ class Jukebox {
 
 };
 
+// -----------------------------------------------------------------------------
+
 // Creating an Intance of Jukebox Constructor and pushing songs to it's array.
 
 var jordansJukeBox = new Jukebox()
@@ -103,19 +123,3 @@ jordansJukeBox.addSongs(song2)
 jordansJukeBox.addSongs(song3)
 
 // -----------------------------------------------------------------------------
-
-
-
-
-
-// var myAudio = new Audio();
-// myAudio.src = whatever url
-// myAudio.play()
-
-
-
-
-
-// Notes
-// Buttons already on browser. Should the event listeners be within the Jukebox or outside of it?
-// The button will activate the function within the class and play or pause audio.
