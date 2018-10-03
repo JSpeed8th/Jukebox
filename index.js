@@ -2,8 +2,8 @@
 
 var playbackButton = document.getElementsByTagName('button')[0];
 var playButton = document.getElementsByTagName('button')[1];
-var pauseButton = document.getElementsByTagName('button')[2];
-var nextButton = document.getElementsByTagName('button')[3];
+// var pauseButton = document.getElementsByTagName('button')[2];
+var nextButton = document.getElementsByTagName('button')[2];
 
 var title = document.querySelector('#currentSong');
 var titleTwo = document.querySelector('#artistAndAlbum');
@@ -12,15 +12,23 @@ var titleTwo = document.querySelector('#artistAndAlbum');
 
 // Event Listeners
 
+var numOfClicks = 0
 playButton.addEventListener('click', function() {
-  jordansJukeBox.playAudio()
-  title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
-  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+  numOfClicks++
+  if (numOfClicks % 2 !=0) {
+    jordansJukeBox.playAudio()
+    title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
+    titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+    playButton.innerHTML = '<ion-icon name="play"></ion-icon>';
+  } else {
+    jordansJukeBox.pauseAudio()
+    playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';
+  }
 });
 
-pauseButton.addEventListener('click', function() {
-  jordansJukeBox.pauseAudio()
-});
+// pauseButton.addEventListener('click', function() {
+//   jordansJukeBox.pauseAudio()
+// });
 
 nextButton.addEventListener('click', function() {
   jordansJukeBox.nextAudio()
@@ -82,13 +90,13 @@ class Jukebox {
   }
   playbackAudio() {
     if (this.songNum > 0) {
-      this.pauseAudio()
+      this.songs[this.songNum].myAudio.pause()
       this.songNum -= 1;
       this.songs[this.songNum].myAudio.currentTime = 0;
       this.playAudio()
     } else if (this.songNum == 0) {
       console.log('End of library')
-      this.pauseAudio()
+      this.songs[this.songNum].myAudio.pause()
       this.songNum = 0;
       this.songs[this.songNum].myAudio.currentTime = 0;
       this.playAudio()
@@ -98,13 +106,13 @@ class Jukebox {
   nextAudio() {
     if ((this.songs.length - 1) > this.songNum) {
       console.log('Playing Next Song')
-      this.pauseAudio()
+      this.songs[this.songNum].myAudio.pause()
       this.songNum += 1;
       this.songs[this.songNum].myAudio.currentTime = 0;
       this.playAudio()
     } else if ((this.songs.length - 1) == this.songNum) {
       console.log('End of library')
-      this.pauseAudio()
+      this.songs[this.songNum].myAudio.pause()
       this.songNum = 0;
       this.songs[this.songNum].myAudio.currentTime = 0;
       this.playAudio()
