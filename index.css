@@ -2,8 +2,17 @@
   text-align: center;
 }
 body{
-  margin-top: 10%;
+  margin-top: 8%;
   font-family: 'Nunito', sans-serif;
+}
+
+#albumArt {
+  width: 13em;
+  height: 13em;
+  border-radius: 5%;
+  border: 2px solid;
+  margin: 2% auto;
+
 }
 
 button {

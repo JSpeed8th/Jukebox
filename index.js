@@ -8,6 +8,8 @@ var nextButton = document.getElementsByTagName('button')[2];
 var title = document.querySelector('#currentSong');
 var titleTwo = document.querySelector('#artistAndAlbum');
 
+var albumArt = document.querySelector('#albumArt');
+
 // -----------------------------------------------------------------------------
 
 // Event Listeners
@@ -34,13 +36,26 @@ nextButton.addEventListener('click', function() {
   jordansJukeBox.nextAudio()
   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
   titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+  playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';
 });
 
 playbackButton.addEventListener('click', function() {
   jordansJukeBox.playbackAudio()
   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
   titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+  playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';
 });
+
+playButton.addEventListener('mouseover', function() {
+  playButton.style.fontSize = '35px';
+  playButton.style.transition = '.5s';
+
+})
+
+playButton.addEventListener('mouseout', function() {
+  playButton.style.fontSize = '40px';
+  playButton.style.transition = '.5s';
+})
 
 // -----------------------------------------------------------------------------
 
@@ -61,17 +76,19 @@ class Song {
 
 // Creating Instances of Song Constructor
 
-var song1 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/01_One_More_Time.mp3');
+var song1 = new Song('II. Shadows', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/06 II. Shadows.mp3')
 
-var song2 = new Song('Aerodynamic', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/02_Aerodynamic.mp3')
+var song2 = new Song('V. 3005', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/09 V. 3005.mp3')
 
-var song3 = new Song('Harder, Better, Faster, Stronger', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/04_Harder,_Better,_Faster,_Stronger.mp3')
+var song3 = new Song('II. Worldstar', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/03 II. Worldstar.mp3')
 
-var song4 = new Song('II. Worldstar', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/03 II. Worldstar.mp3')
+var song4 = new Song('Venus As A Boy', 'Björk', 'Debut', 'Pop', 'music/Björk/Debut/03 Venus As a Boy.mp3')
 
-var song5 = new Song('V. 3005', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/09 V. 3005.mp3')
+var song5 = new Song('Big Time Sensuality', 'Björk', 'Debut', 'Pop', 'music/Björk/Debut/06 Big Time Sensuality.mp3')
 
-var song6 = new Song('II. Shadows', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/06 II. Shadows.mp3')
+var song6 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/01_One_More_Time.mp3');
+
+var song7 = new Song('Harder, Better, Faster, Stronger', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/04_Harder,_Better,_Faster,_Stronger.mp3')
 
 // -----------------------------------------------------------------------------
 
@@ -106,7 +123,6 @@ class Jukebox {
       this.songNum = 0;
       this.songs[this.songNum].myAudio.currentTime = 0;
       this.playAudio()
-
     }
   }
   nextAudio() {
@@ -138,5 +154,6 @@ jordansJukeBox.addSongs(song3)
 jordansJukeBox.addSongs(song4)
 jordansJukeBox.addSongs(song5)
 jordansJukeBox.addSongs(song6)
+jordansJukeBox.addSongs(song7)
 
 // -----------------------------------------------------------------------------
