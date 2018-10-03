@@ -39,7 +39,7 @@ nextButton.addEventListener('click', function() {
 playbackButton.addEventListener('click', function() {
   jordansJukeBox.playbackAudio()
   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
-  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' - ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
 });
 
 // -----------------------------------------------------------------------------
@@ -66,6 +66,12 @@ var song1 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'm
 var song2 = new Song('Aerodynamic', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/02_Aerodynamic.mp3')
 
 var song3 = new Song('Harder, Better, Faster, Stronger', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/04_Harder,_Better,_Faster,_Stronger.mp3')
+
+var song4 = new Song('II. Worldstar', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/03 II. Worldstar.mp3')
+
+var song5 = new Song('V. 3005', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/09 V. 3005.mp3')
+
+var song6 = new Song('II. Shadows', 'Childish Gambino', 'Because The Internet', 'Hip Hop/Rap', 'music/Childish_Gambino/Because_The_Internet/06 II. Shadows.mp3')
 
 // -----------------------------------------------------------------------------
 
@@ -129,5 +135,8 @@ var jordansJukeBox = new Jukebox()
 jordansJukeBox.addSongs(song1)
 jordansJukeBox.addSongs(song2)
 jordansJukeBox.addSongs(song3)
+jordansJukeBox.addSongs(song4)
+jordansJukeBox.addSongs(song5)
+jordansJukeBox.addSongs(song6)
 
 // -----------------------------------------------------------------------------
