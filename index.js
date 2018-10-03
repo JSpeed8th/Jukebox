@@ -1,6 +1,7 @@
-var playButton = document.getElementsByTagName('button')[0];
-var pauseButton = document.getElementsByTagName('button')[1];
-var nextButton = document.getElementsByTagName('button')[2];
+var playbackButton = document.getElementsByTagName('button')[0];
+var playButton = document.getElementsByTagName('button')[1];
+var pauseButton = document.getElementsByTagName('button')[2];
+var nextButton = document.getElementsByTagName('button')[3];
 
 // var jukebox = new Audio('music/unity.mp3')
 
@@ -14,6 +15,10 @@ pauseButton.addEventListener('click', function() {
 
 nextButton.addEventListener('click', function() {
   jordansJukeBox.nextAudio()
+});
+
+playbackButton.addEventListener('click', function() {
+  jordansJukeBox.playbackAudio()
 });
 
 
