@@ -15,7 +15,7 @@ var titleTwo = document.querySelector('#artistAndAlbum');
 playButton.addEventListener('click', function() {
   jordansJukeBox.playAudio()
   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
-  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' - ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
 });
 
 pauseButton.addEventListener('click', function() {
@@ -25,7 +25,7 @@ pauseButton.addEventListener('click', function() {
 nextButton.addEventListener('click', function() {
   jordansJukeBox.nextAudio()
   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
-  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' - ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
 });
 
 playbackButton.addEventListener('click', function() {
