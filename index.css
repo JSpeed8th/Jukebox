@@ -15,6 +15,7 @@ button {
   /* background-color: gray; */
   border: none;
   text-decoration: none;
+  transition: .4s;
 }
 
 #playButton, #pause {

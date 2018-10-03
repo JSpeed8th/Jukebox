@@ -19,10 +19,10 @@ playButton.addEventListener('click', function() {
     jordansJukeBox.playAudio()
     title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
     titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
-    playButton.innerHTML = '<ion-icon name="play"></ion-icon>';
+    playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';
   } else {
     jordansJukeBox.pauseAudio()
-    playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';
+    playButton.innerHTML = '<ion-icon name="play"></ion-icon>';
   }
 });
 
