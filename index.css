@@ -1,0 +1,29 @@
+* {
+  text-align: center;
+}
+body{
+  margin-top: 10%;
+  font-family: 'Nunito', sans-serif;
+}
+
+button {
+  padding: .5em;
+  font-size: 40px;
+  text-align: center;
+  margin: 0 1%;
+  margin-top: 3%;
+  /* background-color: gray; */
+  border: none;
+}
+
+#currentSong, #artistAndAlbum {
+  font-size: 1.5em;
+}
+
+#currentSong {
+  font-weight: bold;
+}
+
+#artistAndAlbum {
+  color: #FF2C55;
+}
