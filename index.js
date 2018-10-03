@@ -2,7 +2,7 @@ var playButton = document.getElementsByTagName('button')[0];
 var pauseButton = document.getElementsByTagName('button')[1];
 var nextButton = document.getElementsByTagName('button')[2];
 
-var jukebox = new Audio('music/unity.mp3')
+// var jukebox = new Audio('music/unity.mp3')
 
 playButton.addEventListener('click', function() {
   jordansJukeBox.playAudio()
@@ -31,7 +31,16 @@ class Song {
     this.myAudio = new Audio(this.src)
   }
 };
-var song1 = new Song('Unity', 'Frank Ocean', 'Endless', 'Pop', 'music/unity.mp3')
+
+// Creating Instances of Song Constructor
+
+var song1 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/01_One_More_Time.mp3');
+
+var song2 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/02_Aerodynamic.mp3')
+
+var song3 = new Song('One More Time', 'Daft Punk', 'Discovery', 'Electronic', 'music/Daft_Punk/Discovery/04_Harder,_Better,_Faster,_Stronger.mp3')
+
+// -----------------------------------------------------------------------------
 
 class Jukebox {
   constructor() {
@@ -48,19 +57,39 @@ class Jukebox {
   pauseAudio() {
     this.songs[this.songNum].myAudio.pause()
   }
+  stopAudio() {
+    this.songs[this.songNum].myAudio.currentTime = 0;
+    this.songNum = 0;
+    this.pauseAudio()
+  }
   nextAudio() {
-    if (this.songs[this.songNum] == this.songs.length - 1) {
-      console.log('next song')
-    } else {
+    if ((this.songs.length - 1) > this.songNum) {
+      console.log('Playing Next Song')
+      this.pauseAudio()
+      this.songNum += 1;
+      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.playAudio()
+    } else if ((this.songs.length - 1) == this.songNum) {
+      console.log('End of library')
+      this.pauseAudio()
       this.songNum = 0;
+      this.songs[this.songNum].myAudio.currentTime = 0;
       this.playAudio()
     }
   }
 
 };
 
+// Creating an Intance of Jukebox Constructor and pushing songs to it's array.
+
 var jordansJukeBox = new Jukebox()
 jordansJukeBox.addSongs(song1)
+jordansJukeBox.addSongs(song2)
+jordansJukeBox.addSongs(song3)
+
+// -----------------------------------------------------------------------------
+
+
 
 
 
