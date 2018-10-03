@@ -57,10 +57,20 @@ class Jukebox {
   pauseAudio() {
     this.songs[this.songNum].myAudio.pause()
   }
-  stopAudio() {
-    this.songs[this.songNum].myAudio.currentTime = 0;
-    this.songNum = 0;
-    this.pauseAudio()
+  playbackAudio() {
+    if (this.songNum > 0) {
+      this.pauseAudio()
+      this.songNum -= 1;
+      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.playAudio()
+    } else if (this.songNum == 0) {
+      console.log('End of library')
+      this.pauseAudio()
+      this.songNum = 0;
+      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.playAudio()
+
+    }
   }
   nextAudio() {
     if ((this.songs.length - 1) > this.songNum) {
