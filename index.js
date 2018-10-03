@@ -8,7 +8,7 @@ var nextButton = document.getElementsByTagName('button')[2];
 var title = document.querySelector('#currentSong');
 var titleTwo = document.querySelector('#artistAndAlbum');
 
-var albumArt = document.querySelector('#albumArt');
+// var albumArt = document.querySelector('#albumArt');
 
 // -----------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ playButton.addEventListener('click', function() {
     jordansJukeBox.playAudio()
     title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
     titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
-    playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';
+    playButton.innerHTML = '<ion-icon name="pause"></ion-icon>';;
   } else {
     jordansJukeBox.pauseAudio()
     playButton.innerHTML = '<ion-icon name="play"></ion-icon>';
@@ -49,13 +49,21 @@ playbackButton.addEventListener('click', function() {
 playButton.addEventListener('mouseover', function() {
   playButton.style.fontSize = '35px';
   playButton.style.transition = '.5s';
+  playButton.style.backgroundColor = '#E5E5E5';
 
 })
 
 playButton.addEventListener('mouseout', function() {
   playButton.style.fontSize = '40px';
   playButton.style.transition = '.5s';
+  playButton.style.backgroundColor = 'white';
 })
+
+// playButton.addEventListener('click', function() {
+//   if (jordansJukeBox.songs[jordansJukeBox.songNum].album == jordansJukeBox.albumArtLibrary) {
+//
+//   }
+// })
 
 // -----------------------------------------------------------------------------
 
@@ -140,7 +148,6 @@ class Jukebox {
       this.playAudio()
     }
   }
-
 };
 
 // -----------------------------------------------------------------------------
