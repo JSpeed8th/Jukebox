@@ -167,7 +167,6 @@ class Jukebox {
     }
   }
   nextAudio() {
-    this.displaySong()
     // If next song within our library is less then the length of our entire library, pause the last song, go to next song, dial back the playtime to zero and play it.
     if ((this.songs.length - 1) > this.songNum) {
       console.log('Playing Next Song')
