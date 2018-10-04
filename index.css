@@ -2,7 +2,7 @@
   text-align: center;
 }
 body{
-  margin-top: 8%;
+  margin-top: 6%;
   font-family: 'Nunito', sans-serif;
 }
 
@@ -15,11 +15,13 @@ body{
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  /* box-shadow: 0 2px 2px; */
 }
 
 button {
-  padding: .5em;
-  font-size: 40px;
+  padding: .3em;
+  padding-top: .5em;
+  font-size: 37px;
   text-align: center;
   margin: 0 1%;
   margin-top: 3%;
@@ -42,8 +44,14 @@ button {
 
 #currentSong {
   font-weight: bold;
+  margin-top: 5%;
 }
 
 #artistAndAlbum {
   color: #FF2C55;
 }
+
+/* #fastforward{
+  left: 400px;
+  top: 350px;
+} */
