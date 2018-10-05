@@ -6,9 +6,6 @@ var nextButton = document.getElementsByTagName('button')[2];
 
 var albumArt = document.querySelector('#albumArt');
 
-var title = document.querySelector('#currentSong');
-var titleTwo = document.querySelector('#artistAndAlbum');
-
 
 // ------------------------------------END--------------------------------------
 
@@ -22,7 +19,6 @@ playButton.addEventListener('click', function() {
   // Also expands album art.
   if (numOfClicks % 2 !=0) {
     jordansJukeBox.playAudio()
-    displaySongInfo()
     displayPauseBtn()
     // Increases Album Art When Play is Pressed
     albumArt.style.transition = '.2s';
@@ -37,6 +33,9 @@ playButton.addEventListener('click', function() {
     albumArt.style.transition = '.2s';
     albumArt.style.width = '13em';
     albumArt.style.height = '13em';
+  }
+  jordansJukeBox.songs[jordansJukeBox.songNum].myAudio.onended = function () {
+    alert('End of Song.')
   }
 });
 
@@ -59,7 +58,6 @@ playButton.addEventListener('mouseout', function() {
 nextButton.addEventListener('click', function() {
   displayPauseBtn()
   jordansJukeBox.nextAudio()
-  displaySongInfo()
   if (numOfClicks == 0) {
     numOfClicks++
   }
@@ -69,7 +67,6 @@ nextButton.addEventListener('click', function() {
 playbackButton.addEventListener('click', function() {
   displayPauseBtn()
   jordansJukeBox.playbackAudio()
-  displaySongInfo()
   if (numOfClicks == 0) {
     numOfClicks++
   }
@@ -118,10 +115,8 @@ class Jukebox {
   constructor() {
     this.songs = [];
     this.songNum = 0;
-    this.currentSong;
-    this.songName;
-    this.album;
-    this.artist;
+    this.title = document.querySelector('#currentSong');
+    this.titleTwo = document.querySelector('#artistAndAlbum');
   }
   addSongs(song) {
     // Pushes songs into an array and prints out what song was added.
@@ -129,23 +124,19 @@ class Jukebox {
     console.log(song.songName + ' by ' + song.artist + ', added to library');
   }
   playAudio() {
-    // Assigning the variables within constructor with updated music info
-    this.songName = this.songs[this.songNum].songName;
-    this.artist = this.songs[this.songNum].artist;
-    this.album = this.songs[this.songNum].album;
-    this.currentSong = this.songs[this.songNum];
+
+    var songName = this.songs[this.songNum].songName;
+    var artist = this.songs[this.songNum].artist;
+
     this.songs[this.songNum].myAudio.play();
-
-
-    this.displaySong()
+    this.displaySongInfo()
+    this.displayAlbumArt()
     console.log('Now Playing...')
-    console.log("'" + this.songName + "'" + ' by ' + this.artist)
+    console.log("'" + songName + "'" + ' by ' + artist)
 
     // WHEN SONG ENDS, DO THIS
-    // Problem: Doesn't display the new song's name and album
     var placeholderJukebox = this
     this.songs[this.songNum].myAudio.onended = function() {
-
     placeholderJukebox.nextAudio()
     }
       }
@@ -154,14 +145,14 @@ class Jukebox {
   }
   playbackAudio() {
     if (this.songNum > 0) {
-      this.songs[this.songNum].myAudio.pause()
+      this.pauseAudio()
       this.songNum -= 1;
-      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.durationToZero()
       this.playAudio()
     } else if (this.songNum == 0) {
       console.log('End of library')
-      this.songs[this.songNum].myAudio.pause()
-      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.pauseAudio()
+      this.durationToZero()
       this.songNum = 0;
       this.playAudio()
     }
@@ -170,20 +161,27 @@ class Jukebox {
     // If next song within our library is less then the length of our entire library, pause the last song, go to next song, dial back the playtime to zero and play it.
     if ((this.songs.length - 1) > this.songNum) {
       console.log('Playing Next Song')
-      this.songs[this.songNum].myAudio.pause()
+      this.pauseAudio()
       this.songNum += 1;
-      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.durationToZero()
       this.playAudio()
     } else if ((this.songs.length - 1) == this.songNum) {
       console.log('End of library')
-      this.songs[this.songNum].myAudio.pause()
+      this.pauseAudio()
       this.songNum = 0;
-      this.songs[this.songNum].myAudio.currentTime = 0;
+      this.durationToZero()
       this.playAudio()
     }
   }
-  displaySong() {
+  displayAlbumArt() {
     albumArt.style.backgroundImage = "url(" + this.songs[this.songNum].imageSrc + ")";
+  }
+  displaySongInfo() {
+    this.title.textContent = this.songs[this.songNum].songName;
+    this.titleTwo.textContent = this.songs[this.songNum].artist + ' — ' + this.songs[this.songNum].album;
+  }
+  durationToZero() {
+    this.songs[this.songNum].myAudio.currentTime = 0;
   }
 };
 
@@ -205,10 +203,10 @@ jordansJukeBox.addSongs(song7)
 // FUNCTIONS TO BE CALLED BY EVENT LISTENERS
 
 // When called this function displays our current songs info
-function displaySongInfo() {
-  title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
-  titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
-}
+// function displaySongInfo() {
+//   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
+//   titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
+// }
 
 // When called, this function displays the pause button
 function displayPauseBtn() {
@@ -219,17 +217,3 @@ function displayPauseBtn() {
 function displayPlayBtn() {
   playButton.innerHTML = '<ion-icon name="ios-play"></ion-icon>';
 }
-
-// function displayAlbumArt() {
-//   // An Array which contains objects of album names as keys and their url as values
-//   var albumTitles = [{'Because The Internet' : "url('img/album_art/Because-The-Internet.jpg')"}, {'Debut' : "url('img/album_art/Björk-Debut-1993.jpg')"}, {'Discovery' : "url('img/album_art/Discovery.jpg')"}]
-//   for (var i = 0; i < albumTitles.length; i++)
-//     // keys(albumTitles[i])
-//     if (jordansJukeBox.album == keys(albumTitles[i])) {
-//       let albumName = keys(albumTitles[i])
-//       let url = albumTitles[i][albumName]
-//       console.log(albumName)
-//       console.log(url)
-//       albumArt.style.backgroundImage = url
-//     }
-//   }
