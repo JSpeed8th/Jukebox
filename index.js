@@ -15,33 +15,26 @@ var numOfClicks = 0
 playButton.addEventListener('click', function() {
   // Add One everytime play is pressed
   numOfClicks++
-  // If clicks are odd, call jukebox's play function and change play image to pause image.
-  // Also expands album art.
+  // If clicks are odd, call jukebox's play function and also expands album art.
   if (numOfClicks % 2 !=0) {
     jordansJukeBox.playAudio()
-    displayPauseBtn()
     // Increases Album Art When Play is Pressed
-    albumArt.style.transition = '.2s';
+    albumArt.style.transition = '.1s';
     albumArt.style.width = '14em';
     albumArt.style.height = '14em';
   } else {
-    // If clicks are even, call jukebox's pause function and change pause image to play image.
-    // Also shrinks album art.
+    // If clicks are even, call jukebox's pause function and also shrinks album art.
     jordansJukeBox.pauseAudio()
-    displayPlayBtn()
-    // Decreases Album Art When Pause is Pressed
-    albumArt.style.transition = '.2s';
-    albumArt.style.width = '13em';
-    albumArt.style.height = '13em';
-  }
-  jordansJukeBox.songs[jordansJukeBox.songNum].myAudio.onended = function () {
-    alert('End of Song.')
+    // Shrinks Album Art When Pause is Pressed
+    albumArt.style.transition = '.1s';
+    albumArt.style.width = '13.4em';
+    albumArt.style.height = '13.4em';
   }
 });
 
 // Hovering over play image shrinks the play image and changes the background color to a light gray.
 playButton.addEventListener('mouseover', function() {
-  playButton.style.fontSize = '35px';
+  playButton.style.fontSize = '38px';
   playButton.style.transition = '.2s';
   playButton.style.backgroundColor = '#E5E5E5';
 
@@ -54,9 +47,8 @@ playButton.addEventListener('mouseout', function() {
   playButton.style.backgroundColor = 'white';
 })
 
-// When forward button is pressed, change play image to pause image and call jukebox's next function. Also, the song info function is called. If number of clicks is equal to zero, add one to the variable. This is for when the user decides to click the next image upon loading the program instead of clicking the play image. If I don't have this, the user will have to click the play pause image twice to actually pause the song.
+// When forward button is pressed, call jukebox's next function. If number of clicks is equal to zero, add one to the variable. This is for when the user decides to click the next button upon loading the program instead of clicking the play button, the user wont have to click the play pause button twice to actually pause the song.
 nextButton.addEventListener('click', function() {
-  displayPauseBtn()
   jordansJukeBox.nextAudio()
   if (numOfClicks == 0) {
     numOfClicks++
@@ -65,7 +57,6 @@ nextButton.addEventListener('click', function() {
 
 // Same as nextButton functionality
 playbackButton.addEventListener('click', function() {
-  displayPauseBtn()
   jordansJukeBox.playbackAudio()
   if (numOfClicks == 0) {
     numOfClicks++
@@ -117,6 +108,10 @@ class Jukebox {
     this.songNum = 0;
     this.title = document.querySelector('#currentSong');
     this.titleTwo = document.querySelector('#artistAndAlbum');
+    this.playbackButton = document.getElementsByTagName('button')[0];
+    this.playButton = document.getElementsByTagName('button')[1];
+    this.nextButton = document.getElementsByTagName('button')[2];
+    this.albumArt = document.querySelector('#albumArt');
   }
   addSongs(song) {
     // Pushes songs into an array and prints out what song was added.
@@ -129,6 +124,7 @@ class Jukebox {
     var artist = this.songs[this.songNum].artist;
 
     this.songs[this.songNum].myAudio.play();
+    this.displayPauseBtn()
     this.displaySongInfo()
     this.displayAlbumArt()
     console.log('Now Playing...')
@@ -141,19 +137,22 @@ class Jukebox {
     }
       }
   pauseAudio() {
+    this.displayPlayBtn()
     this.songs[this.songNum].myAudio.pause()
   }
   playbackAudio() {
     if (this.songNum > 0) {
+      this.displayPauseBtn()
       this.pauseAudio()
       this.songNum -= 1;
       this.durationToZero()
       this.playAudio()
     } else if (this.songNum == 0) {
       console.log('End of library')
+      this.displayPauseBtn()
       this.pauseAudio()
-      this.durationToZero()
       this.songNum = 0;
+      this.durationToZero()
       this.playAudio()
     }
   }
@@ -161,20 +160,22 @@ class Jukebox {
     // If next song within our library is less then the length of our entire library, pause the last song, go to next song, dial back the playtime to zero and play it.
     if ((this.songs.length - 1) > this.songNum) {
       console.log('Playing Next Song')
+      this.displayPauseBtn()
       this.pauseAudio()
       this.songNum += 1;
       this.durationToZero()
       this.playAudio()
     } else if ((this.songs.length - 1) == this.songNum) {
       console.log('End of library')
+      this.displayPlayBtn()
       this.pauseAudio()
       this.songNum = 0;
       this.durationToZero()
-      this.playAudio()
+      // this.playAudio()
     }
   }
   displayAlbumArt() {
-    albumArt.style.backgroundImage = "url(" + this.songs[this.songNum].imageSrc + ")";
+    this.albumArt.style.backgroundImage = "url(" + this.songs[this.songNum].imageSrc + ")";
   }
   displaySongInfo() {
     this.title.textContent = this.songs[this.songNum].songName;
@@ -182,6 +183,12 @@ class Jukebox {
   }
   durationToZero() {
     this.songs[this.songNum].myAudio.currentTime = 0;
+  }
+  displayPauseBtn() {
+    this.playButton.innerHTML = '<ion-icon name="ios-pause"></ion-icon>';
+  }
+  displayPlayBtn() {
+    this.playButton.innerHTML = '<ion-icon name="ios-play"></ion-icon>';
   }
 };
 
@@ -199,21 +206,3 @@ jordansJukeBox.addSongs(song6)
 jordansJukeBox.addSongs(song7)
 
 // ------------------------------------END--------------------------------------
-
-// FUNCTIONS TO BE CALLED BY EVENT LISTENERS
-
-// When called this function displays our current songs info
-// function displaySongInfo() {
-//   title.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].songName;
-//   titleTwo.textContent = jordansJukeBox.songs[jordansJukeBox.songNum].artist + ' — ' + jordansJukeBox.songs[jordansJukeBox.songNum].album;
-// }
-
-// When called, this function displays the pause button
-function displayPauseBtn() {
-  playButton.innerHTML = '<ion-icon name="ios-pause"></ion-icon>';
-}
-
-// When called, this function displays the play button
-function displayPlayBtn() {
-  playButton.innerHTML = '<ion-icon name="ios-play"></ion-icon>';
-}
